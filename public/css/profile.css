@@ -1,0 +1,50 @@
+@import "./_global.css";
+
+.profile {
+	background-color: var(--black);
+	min-height: 100vh;
+	color: white;
+}
+
+.profile__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-end;
+	background-color: var(--dark);
+	padding: 20px;
+	gap: 0 20px;
+}
+
+.profile--avatar {
+	width: 200px;
+	height: 200px;
+	border-radius: 50%;
+	border: 1px solid var(--dark-pink);
+}
+
+.profile__header-left {
+	display: flex;
+	flex-direction: column;
+	gap: 20px 0;
+}
+
+.profile__header-left .small {
+	font-size: 13px;
+}
+
+.profile__header-info {
+	display: flex;
+	flex-direction: column;
+	gap: 10px 0;
+}
+
+.profile--description {
+	margin-top: 10px;
+	line-height: 22px;
+	max-width: 800px;
+}
+
+.profile__content {
+	padding: 20px;
+	margin-top: 20px;
+}

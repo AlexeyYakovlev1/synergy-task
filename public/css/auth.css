@@ -1,0 +1,52 @@
+@import "./_global.css";
+
+.auth {
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	background-color: var(--black);
+	padding: 20px 50px;
+	color: white;
+}
+
+.auth--title {
+	text-align: center;
+	font-size: 35px;
+	font-weight: 400;
+}
+
+.auth__form {
+	margin-top: 35px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px 0;
+}
+
+.auth__generate-password {
+	margin-top: 20px;
+	display: flex;
+	flex-direction: column;
+	gap: 10px 0;
+}
+
+.auth--password-result {
+	background-color: var(--gray);
+	padding: 10px;
+	text-align: center;
+}
+
+.btn--submit {
+	background-color: transparent;
+	border-radius: 20px;
+	border: 2px solid var(--green);
+	padding: 10px 15px;
+	color: white;
+	cursor: pointer;
+}
+
+.auth__footer-text {
+	margin-top: 20px;
+	text-align: center;
+	font-size: 13px;
+}
