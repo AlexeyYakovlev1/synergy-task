@@ -33,7 +33,7 @@
 				</div>
 				<div class="profile__header-right">
 					<button class="btn--primary">
-						<a href="/settings">Настройки</a>
+						<a href="/settings/{{ $user['id'] }}">Настройки</a>
 					</button>
 				</div>
 			</header>
@@ -42,8 +42,8 @@
 			</div>
 		</article>
 	</body>
+
 	<script src="/js/helpers/setCookie.js"></script>
 	<script src="/js/helpers/getCookie.js"></script>
 	<script src="/js/authCheck.js"></script>
-	<script src="/js/profile.js"></script>
 </html>

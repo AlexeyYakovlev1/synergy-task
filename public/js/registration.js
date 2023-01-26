@@ -34,7 +34,8 @@ $authForm.addEventListener("submit", (event) => {
 		method: "POST",
 		headers: {
 			"X-CSRF-TOKEN": $csrfToken.getAttribute("content"),
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+			"X-Requested-With": "XMLHttpRequest"
 		},
 		body: JSON.stringify(payload)
 	})

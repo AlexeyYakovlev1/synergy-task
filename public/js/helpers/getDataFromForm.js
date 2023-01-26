@@ -7,7 +7,8 @@ function getDataFromForm(event) {
 
 	Array.from(event.target.children)
 		.filter((child) => {
-			return child.nodeName === "INPUT" && child.type !== "submit";
+			return (child.nodeName === "INPUT" || "TEXTAREA")
+				&& child.type !== "submit";
 		})
 		.forEach(({ name, value }) => payload[name] = value);
 

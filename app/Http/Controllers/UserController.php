@@ -27,9 +27,103 @@ class UserController extends Controller
 	public function profile_get($id) {
 		$find_user = User::where("id", $id)->first();
 
+		if ($find_user === null) {
+			return redirect("/");
+		}
+
 		return view("profile", [
 			"title" => "Страница профиля",
 			"user" => $find_user
+		]);
+	}
+
+	public function settings_get($id) {
+		$find_user = User::where("id", $id)->first();
+
+		if ($find_user === null) {
+			return redirect("/");
+		}
+
+		$find_passport = Passport::where("user_id", $id)->first();
+
+		return view("settings", [
+			"title" => "Страница настроек",
+			"user" => $find_user,
+			"passport" => $find_passport
+		]);
+	}
+
+	public function profile_change(Request $request, $id) {
+		$current_user_id = $request->query("current_user_id");
+		
+		if (!$current_user_id || $id !== $current_user_id) {
+			return response()->json([
+				"success" => false,
+				"message" => "Недоступно"
+			]);
+		}
+
+		$data_for_user = $request->validate([
+			"first_name" => "required|min:2|max:25",
+			"last_name" => "required|min:2|max:30",
+			"patronymic" => "required|min:2|max:50",
+			"email" => "required|string|email",
+			"description" => "nullable|min:5|max:500",
+			"city" => "nullable|min:2|max:20",
+			"age" => "nullable|numeric|min:14|max:150"
+		]);
+
+		$data_for_passport = $request->validate([
+			"passport_series" => "required|min:4|max:4",
+			"passport_id" => "required|min:6|max:6",
+		]);
+
+		$find_user = User::where("id", $id)->first();
+		$find_passport = Passport::where("user_id", $id)->first();
+
+		// проверка на почту
+		if ($find_user["email"] !== $data_for_user["email"]) {
+			$find_user_by_email = User::where("email", $data_for_user["email"])->first();
+			
+			if ($find_user_by_email !== null) {
+				return response()->json([
+					"success" => false,
+					"message" => "Пользователь с такой почтой уже существует"
+				]);
+			}
+		}
+
+		// проверка на номер паспорта
+		if ($find_passport["series"] !== $data_for_passport["passport_series"]) {
+			$find_passport_by_series = Passport::where("series", $data_for_passport["passport_series"])->first();
+
+			if ($find_passport_by_series !== null) {
+				return response()->json([
+					"success" => false,
+					"message" => "Пользователь с таким паспортом уже существует"
+				]);
+			}
+		}
+
+		// заменяем ключи для таблицы паспорта
+		$data_for_passport["series"] = $data_for_passport["passport_series"];
+		$data_for_passport["num"] = $data_for_passport["passport_id"];
+		unset($data_for_passport["passport_series"]);
+		unset($data_for_passport["passport_id"]);
+
+		// обновляем пользователя
+		$find_user->fill($data_for_user);
+		$find_user->save();
+
+		// обновляем паспорт
+		$find_passport->fill($data_for_passport);
+		$find_passport->save();
+
+		return response()->json([
+			"success" => true,
+			"message" => "Пользователь обновлен",
+			"user" => $find_user,
+			"passport" => $find_passport
 		]);
 	}
 
@@ -79,7 +173,8 @@ class UserController extends Controller
 		return response()->json([
 			"success" => true,
 			"message" => "Успешный вход",
-			"user" => $find_user
+			"user" => $find_user,
+			"passwordUsr" => $data["password"]
 		]);
 	}
 
@@ -126,23 +221,5 @@ class UserController extends Controller
 			"success" => true,
 			"message" => "Успешная регистрация. Ваш пароль: $password"
 		]);
-	}
-
-	public function get_all() {
-		$users = User::all();
-	}
-
-	public function get_by_id() {
-		// $find_user = User::where(id)->get();
-	}
-
-	public function update() {
-		// $find_user = User::find();
-		// $find_user->update(["first_name" => "new name"]);
-	}
-
-	public function delete() {
-		// $find_user = User::withTrashed()->find(id);
-		// $find_user->restore();
 	}
 }

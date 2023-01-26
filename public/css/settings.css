@@ -1,0 +1,58 @@
+@import "./_global.css";
+
+.settings {
+	background-color: var(--black);
+	min-height: 100vh;
+	padding: 20px;
+	color: white;
+}
+
+.settings__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: flex-start;
+}
+
+.settings--title {
+	margin-top: 20px;
+}
+
+.settings--back {
+	max-width: 100px;
+}
+
+.settings__form {
+	margin-top: 50px;
+	display: flex;
+	flex-direction: column;
+	gap: 20px 0;
+	max-width: 500px;
+}
+
+.settings__password {
+	margin-top: 20px;
+}
+
+.settings__password--text {
+	display: flex;
+	align-items: center;
+	gap: 0 20px;
+}
+
+.settings__password--text span {
+	font-size: 13px;
+	max-width: 350px;
+	overflow-x: auto;
+	background-color: var(--gray);
+	padding: 10px;
+}
+
+.settings__form label {
+	display: flex;
+	flex-direction: column;
+	gap: 20px 0;
+}
+
+.settings--submit {
+	max-width: 200px;
+}

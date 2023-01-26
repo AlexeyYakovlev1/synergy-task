@@ -14,18 +14,20 @@ $authFormLogin.addEventListener("submit", async (event) => {
 		method: "POST",
 		headers: {
 			"X-CSRF-TOKEN": $csrfToken.getAttribute("content"),
-			"Content-Type": "application/json"
+			"Content-Type": "application/json",
+			"X-Requested-With": "XMLHttpRequest"
 		},
 		body: JSON.stringify(payload)
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			const { success, message, user } = data;
+			const { success, message, user, passwordUsr } = data;
 
 			alert(message);
 
 			if (success) {
 				setCookie("user", JSON.stringify(user), 1);
+				setCookie("passwordUsr", JSON.stringify(passwordUsr));
 				window.location.replace(`http://127.0.0.1:8000/profile/${user.id}`);
 			}
 		})

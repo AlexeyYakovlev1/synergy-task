@@ -17,8 +17,9 @@ use Illuminate\Support\Facades\Route;
 Route::get('/auth/registration', [UserController::class, 'registration_get']);
 Route::get('/auth/login', [UserController::class, 'login_get']);
 Route::get('/auth/check/{id}', [UserController::class, 'auth_check'])->name("users.auth.check");
-
-Route::get('/profile/{id}', [UserController::class, 'profile_get'])->name("users.profile");
-
 Route::post('/auth/login', [UserController::class, 'login'])->name("users.login");
 Route::post('/auth/registration', [UserController::class, 'create'])->name("users.registration");
+
+Route::get('/profile/{id}', [UserController::class, 'profile_get'])->name("users.profile");
+Route::get('/settings/{id}', [UserController::class, 'settings_get'])->name("users.settings");
+Route::put('/user/change/{id}', [UserController::class, 'profile_change'])->name("users.change");
