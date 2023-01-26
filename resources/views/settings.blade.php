@@ -7,13 +7,26 @@
 		<title>{{ $title }}</title>
 	</head>
 	<body>
+		<div class="modal hidden">
+			<div class="modal__content">
+				<header class="modal__header">
+					<h1 class="modal--title">Вы уверены?</h1>
+					<span class="modal--close">&#10006;</span>
+				</header>
+				<p class="modal--text">Сохраните пароль, чтобы не потерять его</p>
+				<footer class="modal__footer">
+					<button class="btn--primary btn--exit">Выйти</button>
+					<button class="btn--primary btn--stay">Остаться</button>
+				</footer>
+			</div>
+		</div>
 		<article class="settings container">
 			<header class="settings__header">
 				<div class="settings__header--left">
 					<button class="btn--primary settings--back">Назад</button>
 					<h1 class="settings--title">Настройки аккаунта</h1>
 				</div>
-				<button class="btn--primary btn--exit">Выход из аккаунта</button>
+				<button class="btn--primary btn--open-modal">Выход из аккаунта</button>
 			</header>
 			<form
 				class="settings__form"

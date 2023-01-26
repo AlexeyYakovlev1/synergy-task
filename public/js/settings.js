@@ -4,6 +4,11 @@ const $csrfToken = document.querySelector("meta[name='csrf-token']");
 const $settingsPasswordText = document.querySelector(".settings__password--text span");
 const $btnPassword = document.querySelector(".btn--password");
 const $btnExit = document.querySelector(".btn--exit");
+const $modal = document.querySelector(".modal");
+const $modalContent = document.querySelector(".modal__content");
+const $btnOpenModal = document.querySelector(".btn--open-modal");
+const $btnStay = document.querySelector(".btn--stay");
+const $modalClose = document.querySelector(".modal--close");
 
 const user = getCookie("user");
 const { id } = JSON.parse(user);
@@ -48,10 +53,36 @@ $btnPassword.addEventListener("click", () => {
 });
 
 // выход из профиля
+$btnOpenModal.addEventListener("click", () => {
+	$modal.classList.remove("hidden");
+	document.body.style.overflow = "hidden";
+});
+
 $btnExit.addEventListener("click", () => {
 	setCookie("user", undefined, 1);
 	setCookie("passwordUsr", undefined, 1);
 	window.location.replace("http://127.0.0.1:8000/auth/login");
+});
+
+$modalContent.addEventListener("click", (event) => {
+	event.stopPropagation();
+});
+
+$btnStay.addEventListener("click", () => {
+	$modal.classList.add("hidden");
+	document.body.style.overflow = "visible";
+});
+
+$modal.addEventListener("click", (event) => {
+	if (!event.target.classList.contains("modal__content")) {
+		$modal.classList.add("hidden");
+		document.body.style.overflow = "visible";
+	}
+});
+
+$modalClose.addEventListener("click", () => {
+	$modal.classList.add("hidden");
+	document.body.style.overflow = "visible";
 });
 
 // кнопка назад
@@ -76,12 +107,12 @@ $settingsForm.addEventListener("submit", (event) => {
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			const { success, message, user: userFromServ } = data;
+			const { success, message, user: userFromServ, passport } = data;
 
 			alert(message);
 
 			if (success) {
-				setCookie("user", JSON.stringify(userFromServ), 1);
+				setCookie("user", JSON.stringify({ ...userFromServ, ...passport }), 1);
 			}
 		})
 		.catch((error) => console.error(error));

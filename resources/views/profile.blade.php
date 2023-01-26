@@ -46,4 +46,5 @@
 	<script src="/js/helpers/setCookie.js"></script>
 	<script src="/js/helpers/getCookie.js"></script>
 	<script src="/js/authCheck.js"></script>
+	<script src="/js/profile.js"></script>
 </html>
