@@ -70,11 +70,38 @@ class UserController extends Controller
 			"description" => "nullable|min:5|max:500",
 			"city" => "nullable|min:2|max:20",
 			"age" => "nullable|numeric|min:14|max:150"
+		], [
+			"first_name.required" => "Имя является обязательным для заполнения",
+			"first_name.min" => "Имя должно иметь минимум 2 символа",
+			"first_name.max" => "Максимальная длина имени - 25 символов",
+			"last_name.required" => "Фамилия является обязательным для заполнения",
+			"last_name.min" => "Фамилия должна иметь минимум 2 символа",
+			"last_name.max" => "Максимальная длина имени - 30 символов",
+			"patronymic.required" => "Отчество является обязательным для заполнения",
+			"patronymic.min" => "Отчество должно иметь минимум 2 символа",
+			"patronymic.max" => "Максимальная длина отчества - 50 символов",
+			"email.required" => "Почта является обязательным для заполнения",
+			"email.string" => "Почта должна быть строкой",
+			"email.email" => "Почта введена неверно",
+			"description.min" => "Описание должно иметь минимум 5 символов",
+			"description.max" => "Максимальная длина описания - 500 символов",
+			"city.min" => "Название города должно иметь минимум 2 символа",
+			"city.max" => "Максимальная длина названия города - 20 символов",
+			"age.numeric" => "Возраст должен быть числом",
+			"age.min" => "Возраст должен быть минимум 14 символов",
+			"age.max" => "Максимальная возраст 150"
 		]);
 
 		$data_for_passport = $request->validate([
 			"passport_series" => "required|min:4|max:4",
 			"passport_id" => "required|min:6|max:6",
+		], [
+			"passport_series.required" => "Серия паспорта является обязательным для заполнения",
+			"passport_series.min" => "Серия паспорта должена содержать 4 цифры",
+			"passport_series.max" => "Серия паспорта должена содержать 4 цифры",
+			"passport_id.required" => "Номер паспорта является обязательным для заполнения",
+			"passport_id.min" => "Номер паспорта должен содержать 6 цифр",
+			"passport_id.max" => "Номер паспорта должен содержать 6 цифр"
 		]);
 
 		$find_user = User::where("id", $id)->first();
@@ -145,6 +172,13 @@ class UserController extends Controller
 		$data = $request->validate([
 			"email" => "required|string|email",
 			"password" => "required|min:20|max:20"
+		], [
+			"email.required" => "Почта является обязательным для заполнения",
+			"email.string" => "Почта должна быть строкой",
+			"email.email" => "Почта введена неверно",
+			"password.required" => "Пароль является обязательным для заполнения",
+			"password.min" => "Пароль должен содержать 20 символов",
+			"password.max" => "Пароль должен содержать 20 символов"
 		]);
 
 		$email = $data["email"];
@@ -186,6 +220,28 @@ class UserController extends Controller
 			"password" => "required|min:20|max:20",
 			"passport_series" => "required|min:4|max:4",
 			"passport_id" => "required|min:6|max:6"
+		], [
+			"first_name.required" => "Имя является обязательным для заполнения",
+			"first_name.min" => "Имя должно иметь минимум 2 символа",
+			"first_name.max" => "Максимальная длина имени - 25 символов",
+			"last_name.required" => "Фамилия является обязательным для заполнения",
+			"last_name.min" => "Фамилия должна иметь минимум 2 символа",
+			"last_name.max" => "Максимальная длина имени - 30 символов",
+			"patronymic.required" => "Отчество является обязательным для заполнения",
+			"patronymic.min" => "Отчество должно иметь минимум 2 символа",
+			"patronymic.max" => "Максимальная длина отчества - 50 символов",
+			"email.required" => "Почта является обязательным для заполнения",
+			"email.string" => "Почта должна быть строкой",
+			"email.email" => "Почта введена неверно",
+			"password.required" => "Пароль является обязательным для заполнения",
+			"password.min" => "Пароль должен содержать 20 символов",
+			"password.max" => "Пароль должен содержать 20 символов",
+			"passport_series.required" => "Серия паспорта является обязательным для заполнения",
+			"passport_series.min" => "Серия паспорта должена содержать 4 цифры",
+			"passport_series.max" => "Серия паспорта должена содержать 4 цифры",
+			"passport_id.required" => "Номер паспорта является обязательным для заполнения",
+			"passport_id.min" => "Номер паспорта должен содержать 6 цифр",
+			"passport_id.max" => "Номер паспорта должен содержать 6 цифр"
 		]);
 
 		$email = $data["email"];
