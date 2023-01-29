@@ -88,9 +88,21 @@ class UserController extends Controller
 			"city.min" => "Название города должно иметь минимум 2 символа",
 			"city.max" => "Максимальная длина названия города - 20 символов",
 			"age.numeric" => "Возраст должен быть числом",
-			"age.min" => "Возраст должен быть минимум 14 символов",
-			"age.max" => "Максимальная возраст 150"
+			"age.min" => "Вам должно быть минимум 14 лет",
+			"age.max" => "Вам может быть максимум 150 лет"
 		]);
+
+		if ($data_for_user["description"] === null) {
+			$data_for_user["description"] = "Нет описания";
+		}
+
+		if ($data_for_user["city"] === null) {
+			$data_for_user["city"] = "Нет города";
+		}
+
+		if ($data_for_user["age"] === null) {
+			$data_for_user["age"] = "Нет возраста";
+		}
 
 		$data_for_passport = $request->validate([
 			"passport_series" => "required|min:4|max:4",
