@@ -40,7 +40,7 @@
 					</div>
 				</div>
 				<div class="profile__header-right">
-					<button class="btn--primary">
+					<button class="btn--primary profile--settings">
 						<a href="/settings/{{ $user['id'] }}">Настройки</a>
 					</button>
 				</div>

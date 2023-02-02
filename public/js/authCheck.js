@@ -10,7 +10,6 @@ const $loader = document.querySelector(".loader");
 
 	if ((user === "undefined" || !user) && !window.location.href.includes("auth")) {
 		$loader.style.display = "none";
-		window.location.replace("http://127.0.0.1:8000/auth/login");
 		return;
 	} else if ((user !== "undefined" && user) && window.location.href.includes("auth")) {
 		flag = true;
@@ -27,6 +26,7 @@ const $loader = document.querySelector(".loader");
 		.then((response) => response.json())
 		.then((data) => {
 			const { success, user: userFromServ } = data;
+
 			$loader.style.display = "none";
 
 			if (success) {

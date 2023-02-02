@@ -14,10 +14,16 @@ const $modalClose = document.querySelector(".modal--close");
 const $alertTitle = $alert.querySelector(".alert--title");
 const $alertText = $alert.querySelector(".alert--text");
 
-const user = getCookie("user");
-const { id } = JSON.parse(user);
-
 (async function () {
+	const user = getCookie("user");
+
+	if (user === "undefined" || !user) {
+		history.back();
+		return;
+	}
+
+	const { id } = JSON.parse(user);
+
 	$loader.style.display = "inline-block";
 	checkHidePassword();
 
@@ -100,6 +106,10 @@ $settingsBack.addEventListener("click", () => history.back());
 // работа с формой
 $settingsForm.addEventListener("submit", (event) => {
 	event.preventDefault();
+
+	const user = getCookie("user");
+	const { id } = JSON.parse(user);
+
 	$loader.style.display = "inline-block";
 
 	const payload = getDataFromForm(event);
