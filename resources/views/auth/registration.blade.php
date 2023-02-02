@@ -8,6 +8,13 @@
 	</head>
 	<body>
 		<span class="loader"></span>
+		<div class="alert">
+			<header class="alert__header">
+				<span class="alert--title"></span>
+				<span class="alert--close">&#10006;</span>
+			</header>
+			<p class="alert--text"></p>
+		</div>
 		<section class="auth">
 			<header class="auth__header">
 				<h2 class="auth--title">Регистрация</h2>
@@ -68,6 +75,7 @@
 		</section>
 	</body>
 	
+	<script src="/js/alert.js"></script>
 	<script src="/js/helpers/getDataFromForm.js"></script>
 	<script src="/js/helpers/setCookie.js"></script>
 	<script src="/js/helpers/getCookie.js"></script>

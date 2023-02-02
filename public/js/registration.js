@@ -5,6 +5,8 @@ const $btnGeneratePassword = document.querySelector(".btn--generate-password");
 const $authPasswordResult = document.querySelector(".auth--password-result");
 const $authForm = document.querySelector(".auth__form");
 const $csrfToken = document.querySelector("meta[name='csrf-token']");
+const $alertTitle = $alert.querySelector(".alert--title");
+const $alertText = $alert.querySelector(".alert--text");
 
 // генерация пароля для пользователя
 const generatePassword = (
@@ -42,15 +44,29 @@ $authForm.addEventListener("submit", (event) => {
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			$loader.style.display = "none";
-			alert(data.message);
+			const { success, message } = data;
 
-			if (data.success) {
-				window.location.replace("http://127.0.0.1:8000/auth/login");
+			$loader.style.display = "none";
+
+			$alert.style.display = "block";
+			$alertText.textContent = message;
+
+			if (success) {
+				$alertTitle.textContent = "Успех";
+				$alert.className = "alert success";
+
+				window.location.replace(`http://127.0.0.1:8000/auth/login?message=${message}`);
+			} else {
+				$alertTitle.textContent = "Ошибка";
+				$alert.className = "alert error";
 			}
 		})
 		.catch((error) => {
 			$loader.style.display = "none";
+
+			$alert.className = "alert error";
+			$alertText.textContent = error.message;
+
 			console.error(error);
 		});
 });

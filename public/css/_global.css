@@ -32,6 +32,45 @@ textarea {
 	min-height: 200px;
 }
 
+.alert {
+	position: fixed;
+	top: 10px;
+	right: 10px;
+	max-width: 400px;
+	padding: 15px;
+	background-color: white;
+	border-bottom: 3px solid transparent;
+	display: none;
+	transition: border-color .2s ease;
+}
+.alert.success {
+	border-color: var(--green);
+}
+.alert.error {
+	border-color: var(--red);
+}
+
+.alert__header {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.alert--title {
+	font-weight: bold;
+}
+
+.alert--close {
+	cursor: pointer;
+	user-select: none;
+}
+
+.alert--text {
+	margin-top: 10px;
+	font-size: 15px;
+	line-height: 22px;
+}
+
 .loader {
 	width: 48px;
 	height: 48px;

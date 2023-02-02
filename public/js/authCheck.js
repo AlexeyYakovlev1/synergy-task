@@ -1,3 +1,5 @@
+"use strict";
+
 const $loader = document.querySelector(".loader");
 
 (async function () {

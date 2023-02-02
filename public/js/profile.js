@@ -1,3 +1,5 @@
+"use strict";
+
 const $profileName = document.querySelector(".profile--name");
 const $profileAge = document.querySelector(".profile--age");
 const $profileCity = document.querySelector(".profile--city");

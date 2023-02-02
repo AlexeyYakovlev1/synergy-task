@@ -7,6 +7,13 @@
 	</head>
 	<body>
 		<span class="loader"></span>
+		<div class="alert">
+			<header class="alert__header">
+				<span class="alert--title"></span>
+				<span class="alert--close">&#10006;</span>
+			</header>
+			<p class="alert--text"></p>
+		</div>
 		<article class="profile container">
 			<header class="profile__header">
 				<div class="profile__header-left">
@@ -44,6 +51,7 @@
 		</article>
 	</body>
 
+	<script src="/js/alert.js"></script>
 	<script src="/js/helpers/setCookie.js"></script>
 	<script src="/js/helpers/getCookie.js"></script>
 	<script src="/js/authCheck.js"></script>

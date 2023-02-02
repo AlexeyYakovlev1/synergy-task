@@ -1,3 +1,5 @@
+"use strict";
+
 const $settingsBack = document.querySelector(".settings--back");
 const $settingsForm = document.querySelector(".settings__form");
 const $csrfToken = document.querySelector("meta[name='csrf-token']");
@@ -9,6 +11,8 @@ const $modalContent = document.querySelector(".modal__content");
 const $btnOpenModal = document.querySelector(".btn--open-modal");
 const $btnStay = document.querySelector(".btn--stay");
 const $modalClose = document.querySelector(".modal--close");
+const $alertTitle = $alert.querySelector(".alert--title");
+const $alertText = $alert.querySelector(".alert--text");
 
 const user = getCookie("user");
 const { id } = JSON.parse(user);
@@ -114,15 +118,28 @@ $settingsForm.addEventListener("submit", (event) => {
 		.then((response) => response.json())
 		.then((data) => {
 			const { success, message, user: userFromServ, passport } = data;
+
 			$loader.style.display = "none";
-			alert(message);
+
+			$alert.style.display = "block";
+			$alertText.textContent = message;
 
 			if (success) {
+				$alertTitle.textContent = "Успех";
+				$alert.className = "alert success";
+
 				setCookie("user", JSON.stringify({ ...userFromServ, ...passport }), 1);
+			} else {
+				$alertTitle.textContent = "Ошибка";
+				$alert.className = "alert error";
 			}
 		})
 		.catch((error) => {
 			$loader.style.display = "none";
+
+			$alert.className = "alert error";
+			$alertText.textContent = error.message;
+
 			console.error(error);
 		});
 });

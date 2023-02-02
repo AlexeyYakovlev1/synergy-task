@@ -1,3 +1,5 @@
+"use strict";
+
 function getDataFromForm(event) {
 	if (event.target.nodeName !== "FORM") {
 		throw new Error("Only <form></form> element!");
