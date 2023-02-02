@@ -7,15 +7,7 @@
 		<title>{{ $title }}</title>
 	</head>
 	<body>
-		@if ($errors->any())
-			<div class="alert">
-				<ul class="alert__list">
-					@foreach ($errors->all() as $error)
-						<li class="alert--error">{{ $error }}</li>
-					@endforeach
-				</ul>
-			</div>
-		@endif
+		<span class="loader"></span>
 		<section class="auth">
 			<header class="auth__header">
 				<h2 class="auth--title">Регистрация</h2>
@@ -75,6 +67,7 @@
 			</footer>
 		</section>
 	</body>
+	
 	<script src="/js/helpers/getDataFromForm.js"></script>
 	<script src="/js/helpers/setCookie.js"></script>
 	<script src="/js/helpers/getCookie.js"></script>

@@ -7,6 +7,7 @@
 		<title>{{ $title }}</title>
 	</head>
 	<body>
+		<span class="loader"></span>
 		<div class="alert"></div>
 		<section class="auth">
 			<header class="auth__header">

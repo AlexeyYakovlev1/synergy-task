@@ -1,14 +1,19 @@
+const $loader = document.querySelector(".loader");
+
 (async function () {
+	$loader.style.display = "inline-block";
 	const user = getCookie("user");
 
 	let flag = false;
 
 	if ((user === "undefined" || !user) && !window.location.href.includes("auth")) {
+		$loader.style.display = "none";
 		window.location.replace("http://127.0.0.1:8000/auth/login");
 		return;
 	} else if ((user !== "undefined" && user) && window.location.href.includes("auth")) {
 		flag = true;
 	} else if ((user === "undefined" || !user) && window.location.href.includes("auth")) {
+		$loader.style.display = "none";
 		return;
 	}
 
@@ -20,9 +25,11 @@
 		.then((response) => response.json())
 		.then((data) => {
 			const { success, user: userFromServ } = data;
+			$loader.style.display = "none";
 
 			if (success) {
 				setCookie("user", JSON.stringify(userFromServ));
+
 				if (flag) {
 					window.location.replace(`http://127.0.0.1:8000/profile/${id}`);
 				}
@@ -32,5 +39,8 @@
 				}
 			}
 		})
-		.catch((error) => console.error(error));
+		.catch((error) => {
+			$loader.style.display = "none";
+			console.error(error);
+		});
 })();

@@ -6,6 +6,7 @@
 		<title>{{ $title }}</title>
 	</head>
 	<body>
+		<span class="loader"></span>
 		<article class="profile container">
 			<header class="profile__header">
 				<div class="profile__header-left">

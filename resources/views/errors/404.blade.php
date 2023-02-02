@@ -6,6 +6,7 @@
 		<title>Страница не найдена</title>
 	</head>
 	<body>
+		<span class="loader"></span>
 		<div class="wrapper">
 			<h1 class="title">404</h1>
 			<h2 class="subtitle">Ууупс! Ничего не найдено</h2>

@@ -25,6 +25,7 @@ $btnGeneratePassword.addEventListener("click", () => {
 // работа с формой
 $authForm.addEventListener("submit", (event) => {
 	event.preventDefault();
+	$loader.style.display = "inline-block";
 
 	const payload = getDataFromForm(event);
 	payload.password = $authPasswordResult.textContent;
@@ -41,11 +42,15 @@ $authForm.addEventListener("submit", (event) => {
 	})
 		.then((response) => response.json())
 		.then((data) => {
+			$loader.style.display = "none";
 			alert(data.message);
 
 			if (data.success) {
 				window.location.replace("http://127.0.0.1:8000/auth/login");
 			}
 		})
-		.catch((error) => console.error(error));
+		.catch((error) => {
+			$loader.style.display = "none";
+			console.error(error);
+		});
 });

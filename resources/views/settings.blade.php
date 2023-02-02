@@ -7,6 +7,7 @@
 		<title>{{ $title }}</title>
 	</head>
 	<body>
+		<span class="loader"></span>
 		<div class="modal hidden">
 			<div class="modal__content">
 				<header class="modal__header">

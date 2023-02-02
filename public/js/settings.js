@@ -14,15 +14,18 @@ const user = getCookie("user");
 const { id } = JSON.parse(user);
 
 (async function () {
+	$loader.style.display = "inline-block";
 	checkHidePassword();
 
 	const currentId = window.location.href.split("/").pop();
 
 	// если пользователь не является владельцем
 	if (currentId.toString() !== id.toString()) {
+		$loader.style.display = "none";
 		history.back();
 		return;
 	}
+	$loader.style.display = "none";
 })();
 
 function checkHidePassword() {
@@ -59,8 +62,10 @@ $btnOpenModal.addEventListener("click", () => {
 });
 
 $btnExit.addEventListener("click", () => {
+	$loader.style.display = "inline-block";
 	setCookie("user", undefined, 1);
 	setCookie("passwordUsr", undefined, 1);
+	$loader.style.display = "none";
 	window.location.replace("http://127.0.0.1:8000/auth/login");
 });
 
@@ -91,6 +96,7 @@ $settingsBack.addEventListener("click", () => history.back());
 // работа с формой
 $settingsForm.addEventListener("submit", (event) => {
 	event.preventDefault();
+	$loader.style.display = "inline-block";
 
 	const payload = getDataFromForm(event);
 	const url = `http://127.0.0.1:8000/user/change/${id}?current_user_id=${id}`;
@@ -108,12 +114,15 @@ $settingsForm.addEventListener("submit", (event) => {
 		.then((response) => response.json())
 		.then((data) => {
 			const { success, message, user: userFromServ, passport } = data;
-
+			$loader.style.display = "none";
 			alert(message);
 
 			if (success) {
 				setCookie("user", JSON.stringify({ ...userFromServ, ...passport }), 1);
 			}
 		})
-		.catch((error) => console.error(error));
+		.catch((error) => {
+			$loader.style.display = "none";
+			console.error(error);
+		});
 });

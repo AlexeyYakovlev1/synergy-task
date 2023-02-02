@@ -6,6 +6,7 @@ const $csrfToken = document.querySelector("meta[name='csrf-token']");
 // работа с формой
 $authFormLogin.addEventListener("submit", async (event) => {
 	event.preventDefault();
+	$loader.style.display = "inline-block";
 
 	const payload = getDataFromForm(event);
 
@@ -22,7 +23,7 @@ $authFormLogin.addEventListener("submit", async (event) => {
 		.then((response) => response.json())
 		.then((data) => {
 			const { success, message, user, passwordUsr } = data;
-
+			$loader.style.display = "none";
 			alert(message);
 
 			if (success) {
@@ -31,5 +32,8 @@ $authFormLogin.addEventListener("submit", async (event) => {
 				window.location.replace(`http://127.0.0.1:8000/profile/${user.id}`);
 			}
 		})
-		.catch((error) => console.error(error));
+		.catch((error) => {
+			$loader.style.display = "none";
+			console.error(error);
+		});
 });
