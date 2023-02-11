@@ -108,17 +108,19 @@ $settingsForm.addEventListener("submit", (event) => {
 	event.preventDefault();
 
 	const user = getCookie("user");
+	const token = getCookie("token");
 	const { id } = JSON.parse(user);
 
 	$loader.style.display = "inline-block";
 
 	const payload = getDataFromForm(event);
-	const url = `http://127.0.0.1:8000/user/change/${id}?current_user_id=${id}`;
+	const url = `http://127.0.0.1:8000/api/user/change/${id}`;
 
 	// отправка данных
 	fetch(url, {
 		method: "PUT",
 		headers: {
+			"Authorization": `Bearer ${token}`,
 			"Content-Type": "application/json",
 			"X-CSRF-TOKEN": $csrfToken.getAttribute("content"),
 			"X-Requested-With": "XMLHttpRequest"
@@ -139,6 +141,7 @@ $settingsForm.addEventListener("submit", (event) => {
 				$alert.className = "alert success";
 
 				setCookie("user", JSON.stringify({ ...userFromServ, ...passport }), 1);
+				window.location.href = `http://127.0.0.1:8000/profile/${userFromServ.id}`;
 			} else {
 				$alertTitle.textContent = "Ошибка";
 				$alert.className = "alert error";

@@ -36,7 +36,7 @@ $authFormLogin.addEventListener("submit", async (event) => {
 	})
 		.then((response) => response.json())
 		.then((data) => {
-			const { success, message, user, passwordUsr } = data;
+			const { success, message, user, passwordUsr, token } = data;
 
 			$loader.style.display = "none";
 
@@ -49,6 +49,7 @@ $authFormLogin.addEventListener("submit", async (event) => {
 
 				setCookie("user", JSON.stringify(user), 1);
 				setCookie("passwordUsr", JSON.stringify(passwordUsr));
+				setCookie("token", token);
 
 				window.location.replace(`http://127.0.0.1:8000/profile/${user.id}`);
 			} else {

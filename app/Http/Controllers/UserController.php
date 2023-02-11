@@ -6,23 +6,28 @@ use App\Models\Passport;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log;
+use ReallySimpleJWT\Token;
 
 class UserController extends Controller
 {
 	protected $table = "users";
 
+	// Страница регистрации
 	public function registration_get() {
 		return view("auth.registration", [
 			"title" => "Страница регистрации"
 		]);
 	}
 
+	// Страница входа
 	public function login_get() {
 		return view("auth.login", [
 			"title" => "Страница входа"
 		]);
 	}
 
+	// Страница профиля
 	public function profile_get($id) {
 		$find_user = User::where("id", $id)->first();
 
@@ -36,6 +41,7 @@ class UserController extends Controller
 		]);
 	}
 
+	// Страница настроек
 	public function settings_get($id) {
 		$find_user = User::where("id", $id)->first();
 
@@ -52,13 +58,12 @@ class UserController extends Controller
 		]);
 	}
 
+	// Изменение данных
 	public function profile_change(Request $request, $id) {
-		$current_user_id = $request->query("current_user_id");
-		
-		if (!$current_user_id || $id !== $current_user_id) {
+		if (!$request->isAuth) {
 			return response()->json([
 				"success" => false,
-				"message" => "Недоступно"
+				"message" => "Доступ закрыт"
 			]);
 		}
 
@@ -92,17 +97,10 @@ class UserController extends Controller
 			"age.max" => "Вам может быть максимум 150 лет"
 		]);
 
-		if ($data_for_user["description"] === null) {
-			$data_for_user["description"] = "Нет описания";
-		}
-
-		if ($data_for_user["city"] === null) {
-			$data_for_user["city"] = "Нет города";
-		}
-
-		if ($data_for_user["age"] === null) {
-			$data_for_user["age"] = "Нет возраста";
-		}
+		// Установка дефолтных значений
+		if ($data_for_user["description"] === null) $data_for_user["description"] = "Нет описания";
+		if ($data_for_user["city"] === null) $data_for_user["city"] = "Нет города";
+		if ($data_for_user["age"] === null) $data_for_user["age"] = "Нет возраста";
 
 		$data_for_passport = $request->validate([
 			"passport_series" => "required|min:4|max:4",
@@ -146,6 +144,7 @@ class UserController extends Controller
 		// заменяем ключи для таблицы паспорта
 		$data_for_passport["series"] = $data_for_passport["passport_series"];
 		$data_for_passport["num"] = $data_for_passport["passport_id"];
+		
 		unset($data_for_passport["passport_series"]);
 		unset($data_for_passport["passport_id"]);
 
@@ -165,7 +164,14 @@ class UserController extends Controller
 		]);
 	}
 
-	public function auth_check($id) {
+	// Проверка пользователя на вход
+	public function auth_check(Request $request, $id) {
+		if (!$request->isAuth) {
+			return response()->json([
+				"success" => false
+			]);
+		}
+
 		$find_user = User::where("id", $id)->first();
 		
 		if ($find_user === null) {
@@ -174,12 +180,21 @@ class UserController extends Controller
 			]);
 		}
 
+		$jwt_key = env("JWT_KEY");
+		$user_id = $find_user->id;
+		$expiration = time() * 3600; // 1 hour
+		$issuer = env("HOST");
+
+		$token = Token::create($user_id, $jwt_key, $expiration, $issuer);
+
 		return response()->json([
 			"success" => true,
-			"user" => $find_user
+			"user" => $find_user,
+			"token" => $token
 		]);
 	}
 
+	// Логин
 	public function login(Request $request) {
 		$data = $request->validate([
 			"email" => "required|string|email",
@@ -206,23 +221,32 @@ class UserController extends Controller
 
 		$password = $data["password"];
 		$decode_password = Hash::check($password, $find_user["password"]);
-
+		
 		// проверка пароля
-		if ($decode_password === null) {
+		if (!$decode_password) {
 			return response()->json([
 				"success" => false,
 				"message" => "Данные неверны"
 			]);
 		}
-		
+
+		$jwt_key = env("JWT_KEY");
+		$user_id = $find_user->id;
+		$expiration = time() * 3600; // 1 hour
+		$issuer = env("HOST");
+
+		$token = Token::create($user_id, $jwt_key, $expiration, $issuer);
+
 		return response()->json([
 			"success" => true,
 			"message" => "Успешный вход",
 			"user" => $find_user,
+			"token" => $token,
 			"passwordUsr" => $data["password"]
-		]);
+		])->header("Content-Type", "application/json");
 	}
 
+	// Создание
 	public function create(Request $request) {
 		$data = $request->validate([
 			"first_name" => "required|min:2|max:25",

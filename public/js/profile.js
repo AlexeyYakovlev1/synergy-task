@@ -8,7 +8,7 @@ const $profileSettings = document.querySelector(".profile--settings");
 
 const user = getCookie("user");
 
-if (user !== "undefined") {
+if (user !== "undefined" && user !== undefined) {
 	const { first_name, last_name, patronymic, age, city, description, id } = JSON.parse(user);
 	const currentId = window.location.href.split("/").pop();
 

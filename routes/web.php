@@ -14,12 +14,25 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/auth/registration', [UserController::class, 'registration_get']);
-Route::get('/auth/login', [UserController::class, 'login_get']);
-Route::get('/auth/check/{id}', [UserController::class, 'auth_check'])->name("users.auth.check");
-Route::post('/auth/login', [UserController::class, 'login'])->name("users.login");
-Route::post('/auth/registration', [UserController::class, 'create'])->name("users.registration");
+// Auth
+Route::prefix("auth")->group(function () {
+	Route::get('/registration', [UserController::class, 'registration_get']);
+	Route::get('/login', [UserController::class, 'login_get']);
+	Route::get('/check/{id}', [UserController::class, 'auth_check'])
+		->name("users.auth.check")
+		->middleware("checkToken");
+	Route::post('/login', [UserController::class, 'login'])->name("users.login");
+	Route::post('/registration', [UserController::class, 'create'])->name("users.registration");
+});
 
-Route::get('/profile/{id}', [UserController::class, 'profile_get'])->name("users.profile");
-Route::get('/settings/{id}', [UserController::class, 'settings_get'])->name("users.settings");
-Route::put('/user/change/{id}', [UserController::class, 'profile_change'])->name("users.change");
+// Profile
+Route::get('/profile/{id}', [UserController::class, 'profile_get'])
+	->name("users.profile");
+Route::get('/settings/{id}', [UserController::class, 'settings_get'])
+	->name("users.settings");
+
+// Api profile
+Route::prefix("api")->group(function () {
+	Route::put('/user/change/{id}', [UserController::class, 'profile_change'])
+		->middleware("checkToken");
+});
