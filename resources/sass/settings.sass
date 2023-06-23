@@ -1,0 +1,99 @@
+@import "./_global.sass"
+
+.settings
+	background-color: $black
+	min-height: 100vh
+	padding: 20px
+	color: white
+
+	&__header
+		display: flex
+		justify-content: space-between
+		align-items: flex-start
+
+	&__title
+		margin-top: 20px
+
+	&__back
+		max-width: 100px
+
+	&__form
+		margin-top: 50px
+		display: flex
+		flex-direction: column
+		gap: 20px 0
+		max-width: 500px
+
+	&__password
+		margin-top: 20px
+
+		&--text
+			display: flex
+			align-items: center
+			gap: 0 20px
+
+		&--text span
+			font-size: 13px
+			width: 180px
+			overflow-x: auto
+			background-color: $gray
+			padding: 10px
+
+	&__form label
+		display: flex
+		flex-direction: column
+		gap: 20px 0
+
+	&__submit
+		max-width: 200px
+
+.modal
+	position: fixed
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	background-color: rgba(0,0,0,.5)
+
+	&.hidden
+		display: none
+
+	&__content
+		position: absolute
+		top: 50%
+		left: 50%
+		transform: translate(-50%, -50%)
+		background-color: $dark
+		color: white
+
+	&__header
+		padding: 20px
+		display: flex
+		justify-content: space-between
+		align-items: center
+		border-bottom: 1px solid $green
+
+	&__close
+		cursor: pointer
+		user-select: none
+
+	&__title
+		font-weight: 400
+		font-size: 24px
+
+	&__text
+		line-height: 22px
+		padding: 20px
+
+	&__footer
+		display: flex
+		justify-content: space-between
+		align-items: center
+		padding: 20px
+
+.btn
+	&__exit
+		background-color: $red
+		color: white
+		&:hover
+			background-color: $light-pink

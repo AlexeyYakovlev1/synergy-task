@@ -2,7 +2,7 @@
 <html lang="en">
 	<head>
 		<meta charset="UTF-8" />
-		<link rel="stylesheet" href="/css/404.css"/>
+		@vite(["resources/sass/404.sass"])
 		<title>Страница не найдена</title>
 	</head>
 	<body>
@@ -14,7 +14,7 @@
 				Страница, которую вы ищете, могла быть удалена из-за
 				изменения названия или временно недоступна.
 				<a
-					class="link--primary"
+					class="link__primary"
 					href="http://127.0.0.1:8000/auth/login"
 				>
 					Перейти на страницу авторизации
