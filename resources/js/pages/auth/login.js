@@ -34,6 +34,7 @@ authFormLogin.addEventListener("submit", (event) => {
 			if (success === false || (errors && Object.entries(errors).length)) return;
 
 			Cookie.set("token", token, { expires: 1 });
+			Cookie.remove("login-message");
 
 			window.location.href = `http://127.0.0.1:8000/user/${user_id}`;
 		})
