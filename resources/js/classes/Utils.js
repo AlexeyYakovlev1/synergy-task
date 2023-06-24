@@ -1,3 +1,6 @@
+import jwt_decode from "jwt-decode";
+import Cookie from "js-cookie";
+
 class Utils {
 	getCsrf() {
 		return document.querySelector("meta[name=csrf-token]").content;
@@ -14,6 +17,10 @@ class Utils {
 		return Array.from(crypto.getRandomValues(new Uint32Array(length)))
 			.map((x) => wishlist[x % wishlist.length])
 			.join("");
+	}
+
+	getCurrentUserId() {
+		return jwt_decode(Cookie.get("token")).id;
 	}
 }
 

@@ -2,6 +2,7 @@ import Auth from "../../classes/Auth";
 import Utils from "../../classes/Utils";
 import Loader from "../../classes/Loader";
 import Alert from "../../classes/Alert";
+import Cookie from "js-cookie";
 
 const auth = new Auth();
 const utils = new Utils();
@@ -37,7 +38,10 @@ authFormRegistration.addEventListener("submit", (event) => {
 			if (message) alert.show(success, message);
 			if (success === false || (errors && Object.entries(errors).length)) return;
 
-			alert.show(success, `Ваш пароль для входа в аккаунт: ${password}`);
+			const loginMessage = `Ваш пароль для входа в аккаунт: ${password}. Сохраните его!`;
+
+			alert.show(success, loginMessage);
+			Cookie.set("login-message", loginMessage);
 
 			window.location.href = "http://127.0.0.1:8000/auth/login";
 		})

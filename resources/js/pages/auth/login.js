@@ -7,6 +7,12 @@ const auth = new Auth();
 const alert = new Alert();
 const loader = new Loader();
 
+document.addEventListener("DOMContentLoaded", () => {
+	if (!Cookie.get("login-message")) return;
+
+	alert.show(true, Cookie.get("login-message"));
+});
+
 const authFormLogin = document.querySelector(".auth__form.login");
 
 authFormLogin.addEventListener("submit", (event) => {
