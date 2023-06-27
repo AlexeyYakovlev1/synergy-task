@@ -7,23 +7,23 @@
 		<div class="profile__header-left">
 			<img
 				class="profile__avatar"
-				src="http://127.0.0.1:8000/storage/avatars/{{ $userData['avatar'] }}"
-				alt="фото {{ $userData['first_name'] }}"
+				src="http://127.0.0.1:8000/storage/avatars/{{ $user['avatar'] }}"
+				alt="фото {{ $user['first_name'] }}"
 			/>
 			<div class="profile__header-info">
 				<h2 class="profile__name">
-					{{ $userData["last_name"] }}
-					{{ $userData["first_name"] }}
-					{{ $userData["patronymic"] }}
+					{{ $user["last_name"] }}
+					{{ $user["first_name"] }}
+					{{ $user["patronymic"] }}
 				</h2>
 				<span class="profile__age small">
-					Возраст: {{ $userData["age"] }}
+					Возраст: {{ $user["age"] }}
 				</span>
 				<span class="profile__city small">
-					Город: {{ $userData["city"] }}
+					Город: {{ $user["city"] }}
 				</span>
 				<p class="profile__description">
-					{{ $userData["description"] }}
+					{{ $user["description"] }}
 				</p>
 			</div>
 		</div>

@@ -42,6 +42,7 @@ class DataIfTokenExist
 		if (!$find_passport) return abort(404);
 
 		return new Response(view("pages.settings", [
+			"notMyProfile" => false,
 			"user" => $find_user,
 			"passport" => $find_passport
 		]));

@@ -1,0 +1,33 @@
+@import "../_global.sass"
+
+.header
+	background-color: $black
+	color: #fff
+	display: grid
+	grid-template-columns: auto 1fr minmax(auto, 90px)
+	align-items: center
+	gap: 0 20px
+	border-bottom: 1px solid $gradient-1
+	position: sticky
+	top: 0
+	padding: 10px 0
+	&__logo
+		font-size: 23px
+		font-weight: bold
+		background-color: $gradient-1
+	&__search
+		&-wrapper
+			display: flex
+			justify-content: center
+		&-input
+			max-width: 30%
+	&__nav
+		padding-right: 10px
+		&.not-auth
+			display: flex
+			justify-content: end
+			padding-right: 20px
+	&__list
+		display: flex
+		flex-wrap: wrap
+		justify-content: space-between

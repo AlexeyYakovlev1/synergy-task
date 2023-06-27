@@ -29,7 +29,7 @@ class GiveUserData
 
 			return new Response(view("pages.user", [
 				"notMyProfile" => true,
-				"userData" => $find_user,
+				"user" => $find_user,
 				"title" => $title
 			]));
 		};
@@ -49,7 +49,7 @@ class GiveUserData
 
 			return new Response(view("pages.user", [
 				"notMyProfile" => true,
-				"userData" => $find_user,
+				"user" => $find_user,
 				"title" => $title
 			]));
 		}
@@ -66,7 +66,7 @@ class GiveUserData
 
 			return new Response(view("pages.user", [
 				"notMyProfile" => true,
-				"userData" => $find_user,
+				"user" => $find_user,
 				"title" => $title
 			]));
 		}
@@ -77,7 +77,7 @@ class GiveUserData
 
 		return new Response(view("pages.user", [
 			"notMyProfile" => false,
-			"userData" => $current_user,
+			"user" => $current_user,
 			"title" => $title
 		]));
 	}

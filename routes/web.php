@@ -15,9 +15,8 @@ Route::prefix("/auth")->group(function() {
 
 // User
 Route::prefix("/user")->group(function() {
-	Route::view("/{id}", "pages.user")->middleware("give_user_data");
+	Route::view("/{id}", "pages.user")->middleware("check_auth")->middleware("give_user_data");
 
 	Route::post("/update/{id}", [UserController::class, "update"])->middleware("check_auth");
 });
-
 Route::view("/settings", "pages.settings")->middleware("data_if_token_exist");

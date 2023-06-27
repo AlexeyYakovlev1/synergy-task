@@ -58,7 +58,6 @@ class UserController extends Controller
 		if ($data_for_user["description"] === null) $data_for_user["description"] = "Нет описания";
 		if ($data_for_user["city"] === null) $data_for_user["city"] = "Нет города";
 		if ($data_for_user["age"] === null) $data_for_user["age"] = "Нет возраста";
-		if ($data_for_user["avatar"] === null) $data_for_user["avatar"] = "avatar-default.png";
 
 		$data_for_passport = $request->validate([
 			"passport_series" => "required|min:4|max:4",
