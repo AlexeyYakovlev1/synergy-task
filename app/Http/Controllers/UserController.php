@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Passport;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -27,7 +28,8 @@ class UserController extends Controller
 			"email" => "required|string|email",
 			"description" => "nullable|min:5|max:500",
 			"city" => "nullable|min:2|max:20",
-			"age" => "nullable|numeric|min:14|max:150"
+			"age" => "nullable|numeric|min:14|max:150",
+			"avatar" => "max:1024|mimes:png,jpg,jpeg,svg"
 		], [
 			"first_name.required" => "Имя является обязательным для заполнения",
 			"first_name.min" => "Имя должно иметь минимум 2 символа",
@@ -47,13 +49,16 @@ class UserController extends Controller
 			"city.max" => "Максимальная длина названия города - 20 символов",
 			"age.numeric" => "Возраст должен быть числом",
 			"age.min" => "Вам должно быть минимум 14 лет",
-			"age.max" => "Вам может быть максимум 150 лет"
+			"age.max" => "Вам может быть максимум 150 лет",
+			"avatar.max" => "Файл аватара не может весить больше 1мб",
+			"avatar.mimes" => "Файл аватара может иметь следующие расширения: png, jpg, jpeg, svg"
 		]);
 
 		// Установка дефолтных значений
 		if ($data_for_user["description"] === null) $data_for_user["description"] = "Нет описания";
 		if ($data_for_user["city"] === null) $data_for_user["city"] = "Нет города";
 		if ($data_for_user["age"] === null) $data_for_user["age"] = "Нет возраста";
+		if ($data_for_user["avatar"] === null) $data_for_user["avatar"] = "avatar-default.png";
 
 		$data_for_passport = $request->validate([
 			"passport_series" => "required|min:4|max:4",
@@ -84,6 +89,21 @@ class UserController extends Controller
 				)
 				->header("Content-Type", "application/json");
 			}
+		}
+
+		$new_avatar = $request->file("avatar");
+
+		if ($request->hasFile("avatar") && $new_avatar->isValid()) {
+			$old_avatar = $find_user->avatar;
+			$ext = $new_avatar->getClientOriginalExtension();
+			$file_name = $find_user->id . '-' . date('Y-m-d-H-i-s') . "." . $ext;
+
+			if ($old_avatar !== "avatar-default.png") {
+				Storage::delete("public/avatars/" . $old_avatar);
+			}
+
+			$new_avatar->storeAs("public/avatars", $file_name);
+			$data_for_user["avatar"] = $file_name;
 		}
 
 		// проверка на номер паспорта

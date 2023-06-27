@@ -7,10 +7,14 @@ class Alert {
 		this.alertElement.style.display = "block";
 		this.alertElement.className = `alert ${success ? "success" : "error"}`
 
-		// Удаляем (and n errors)
-		const correctMessage = message.replace(" " + message.substr(message.indexOf("(")), "");
+		let correctMessage = message;
 
-		document.querySelector(".alert__text").textContent = correctMessage;
+		// Удаляем (and n errors)
+		if (correctMessage.includes("(and ")) {
+			correctMessage = message.replace(" " + message.substr(message.indexOf("(")), "");
+		}
+
+		document.querySelector(".alert__text").textContent = message;
 		document.querySelector(".alert__title").textContent = success ? "Успех" : "Ошибка";
 	}
 

@@ -10,8 +10,23 @@
 		</div>
 		<button class="btn__primary btn__open-modal">Выход из аккаунта</button>
 	</header>
-	<form class="settings__form">
+	<form class="settings__form" autocomplete="off" enctype="multipart/form-data">
 		@csrf
+		<label for="avatar">
+			Аватар
+		</label>
+		<input
+			name="avatar"
+			class="settings__input-avatar"
+			type="file"
+			id="avatar"
+			accept="image/*"
+		/>
+		<img
+			class="settings__avatar-view"
+			src="http://127.0.0.1:8000/storage/avatars/{{ $user['avatar'] }}"
+			alt="фото {{ $user['first_name'] }}"
+		/>
 		<label for="first_name">
 			Главная информация
 		</label>
@@ -86,6 +101,6 @@
 	</form>
 	
 	@section("scripts")
-		@vite(["resources/js/pages/user/settings"])
+		@vite(["resources/js/pages/user/settings", "resources/js/scripts/uploadAvatar"])
 	@stop
 @stop

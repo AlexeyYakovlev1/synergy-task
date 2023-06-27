@@ -21,7 +21,7 @@ return new class extends Migration
 			$table->text('description')->default("Нет описания");
 			$table->string('city')->default("Нет города");
 			$table->string('age')->default("Нет возраста");
-			$table->string('avatar')->default("https://static-00.iconduck.com/assets.00/avatar-default-symbolic-icon-512x488-rddkk3u9.png");
+			$table->string('avatar')->default("avatar-default.png");
 			$table->rememberToken();
 			$table->timestamps();
         });

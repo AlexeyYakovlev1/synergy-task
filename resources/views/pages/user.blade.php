@@ -7,7 +7,7 @@
 		<div class="profile__header-left">
 			<img
 				class="profile__avatar"
-				src="{{ $userData['avatar'] }}"
+				src="http://127.0.0.1:8000/storage/avatars/{{ $userData['avatar'] }}"
 				alt="фото {{ $userData['first_name'] }}"
 			/>
 			<div class="profile__header-info">
@@ -27,13 +27,18 @@
 				</p>
 			</div>
 		</div>
-		@if ($notMyProfile === false)
-			<div class="profile__header-right">
+		<div class="profile__header-right">
+			@if ($notMyProfile === false)
 				<button class="btn__primary profile__settings">
 					<a href="/settings">Настройки</a>
 				</button>
-			</div>
-		@endif
+			@else
+				<button class="btn__primary profile__follow">
+					Подписаться
+				</button>
+			@endif
+			
+		</div>
 	</header>
 	<div class="profile__content">
 		<p>Контент пользователя...</p>

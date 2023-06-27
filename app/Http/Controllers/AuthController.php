@@ -20,8 +20,8 @@ class AuthController extends Controller
 			"email.string" => "Почта должна быть строкой",
 			"email.email" => "Почта введена неверно",
 			"password.required" => "Пароль является обязательным для заполнения",
-			"password.min" => "Пароль должен содержать 20 символов",
-			"password.max" => "Пароль должен содержать 20 символов"
+			"password.min" => "Пароль неверен",
+			"password.max" => "Пароль неверен"
 		]);
 		
 		$find_user = User::where("email", $data["email"])->first();
