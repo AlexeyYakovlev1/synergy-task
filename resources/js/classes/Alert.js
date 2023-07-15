@@ -14,7 +14,7 @@ class Alert {
 			correctMessage = message.replace(" " + message.substr(message.indexOf("(")), "");
 		}
 
-		document.querySelector(".alert__text").textContent = message;
+		document.querySelector(".alert__text").textContent = correctMessage;
 		document.querySelector(".alert__title").textContent = success ? "Успех" : "Ошибка";
 	}
 

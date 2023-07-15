@@ -8,24 +8,26 @@
 			<img
 				class="profile__avatar"
 				src="http://127.0.0.1:8000/storage/avatars/{{ $user['avatar'] }}"
-				alt="фото {{ $user['first_name'] }}"
+				alt="аватар {{ $user['first_name'] }}"
 			/>
-			<div class="profile__header-info">
-				<h2 class="profile__name">
-					{{ $user["last_name"] }}
-					{{ $user["first_name"] }}
-					{{ $user["patronymic"] }}
-				</h2>
-				<span class="profile__age small">
-					Возраст: {{ $user["age"] }}
-				</span>
-				<span class="profile__city small">
-					Город: {{ $user["city"] }}
-				</span>
-				<p class="profile__description">
-					{{ $user["description"] }}
-				</p>
-			</div>
+			@if ($user) 
+				<div class="profile__header-info">
+					<h2 class="profile__name">
+						{{ $user["last_name"] }}
+						{{ $user["first_name"] }}
+						{{ $user["patronymic"] }}
+					</h2>
+					<span class="profile__age small">
+						Возраст: {{ $user["age"] }}
+					</span>
+					<span class="profile__city small">
+						Город: {{ $user["city"] }}
+					</span>
+					<p class="profile__description">
+						{{ $user["description"] }}
+					</p>
+				</div>
+			@endif
 		</div>
 		<div class="profile__header-right">
 			@if ($notMyProfile === false)
@@ -37,10 +39,9 @@
 					Подписаться
 				</button>
 			@endif
-			
 		</div>
 	</header>
 	<div class="profile__content">
-		<p>Контент пользователя...</p>
+		<ul class="profile__content-posts"></ul>
 	</div>
 @stop

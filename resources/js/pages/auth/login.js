@@ -24,7 +24,6 @@ authFormLogin.addEventListener("submit", (event) => {
 	const promiseLogin = auth.login(fd);
 
 	promiseLogin
-		.then((response) => response.json())
 		.then((data) => {
 			const { success, message, token, user_id, errors } = data;
 

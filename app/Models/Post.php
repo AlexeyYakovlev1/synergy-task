@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 
-class Passport extends Model
+class Post extends Model
 {
     use HasApiTokens, HasFactory, Notifiable;
 

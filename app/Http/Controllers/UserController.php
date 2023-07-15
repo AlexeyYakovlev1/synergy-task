@@ -3,14 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Models\Passport;
+use App\Models\Post;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
-    public function update(Request $request, string $id) {
-		if (!$request->isAuth) {
+    public function update(Request $request, string $id)
+	{
+		if (!$request->isAuth)
+		{
 			return response(
 				[
 					"success" => false,
@@ -21,6 +24,10 @@ class UserController extends Controller
 			->header("Content-Type", "application/json");
 		}
 
+		/**
+		 * TODO:
+		 * Вынести валидацию в отдельный файл
+		 */
 		$data_for_user = $request->validate([
 			"first_name" => "required|min:2|max:25",
 			"last_name" => "required|min:2|max:30",
@@ -71,14 +78,20 @@ class UserController extends Controller
 			"passport_id.max" => "Номер паспорта должен содержать 6 цифр"
 		]);
 
+		/**
+		 * TODO:
+		 * Утилита, которая возвращает пользователя по определенному свойству
+		 */
 		$find_user = User::where("id", $id)->first();
 		$find_passport = Passport::where("user_id", $id)->first();
 	
 		// проверка на почту
-		if ($find_user["email"] !== $data_for_user["email"]) {
+		if ($find_user["email"] !== $data_for_user["email"])
+		{
 			$find_user_by_email = User::where("email", $data_for_user["email"])->first();
 			
-			if ($find_user_by_email !== null) {
+			if ($find_user_by_email !== null)
+			{
 				return response(
 					[
 						"success" => false,
@@ -92,10 +105,11 @@ class UserController extends Controller
 
 		$new_avatar = $request->file("avatar");
 
-		if ($request->hasFile("avatar") && $new_avatar->isValid()) {
+		if ($request->hasFile("avatar") && $new_avatar->isValid())
+		{
 			$old_avatar = $find_user->avatar;
 			$ext = $new_avatar->getClientOriginalExtension();
-			$file_name = $find_user->id . '-' . date('Y-m-d-H-i-s') . "." . $ext;
+			$file_name = $find_user->id . "-" . date("Y-m-d-H-i-s") . "." . $ext;
 
 			if ($old_avatar !== "avatar-default.png") {
 				Storage::delete("public/avatars/" . $old_avatar);
@@ -106,7 +120,8 @@ class UserController extends Controller
 		}
 
 		// проверка на номер паспорта
-		if ($find_passport["series"] !== $data_for_passport["passport_series"]) {
+		if ($find_passport["series"] !== $data_for_passport["passport_series"])
+		{
 			$find_passport_by_series = Passport::where("series", $data_for_passport["passport_series"])->first();
 
 			if ($find_passport_by_series !== null) {

@@ -27,7 +27,8 @@ class AuthController extends Controller
 		$find_user = User::where("email", $data["email"])->first();
 
 		// Проверка на почту
-		if (!$find_user) {
+		if (!$find_user)
+		{
 			return response(
 				[
 					"success" => false,
@@ -41,7 +42,8 @@ class AuthController extends Controller
 		$check_password = Hash::check($data["password"], $find_user->password);
 
 		// Проверка пароля
-		if (!$check_password) {
+		if (!$check_password)
+		{
 			return response(
 				[
 					"success" => false,
@@ -111,7 +113,8 @@ class AuthController extends Controller
 		$find_user = User::where("email", $data["email"])->first();
 
 		// Проверка на почту
-		if ($find_user) {
+		if ($find_user)
+		{
 			return response(
 				[
 					"success" => false,
@@ -125,7 +128,8 @@ class AuthController extends Controller
 		// Проверка паспорта на номер
 		$find_passport = Passport::where("num", $data["passport_id"])->first();
 
-		if ($find_passport) {
+		if ($find_passport)
+		{
 			return response(
 				[
 					"success" => false,

@@ -33,9 +33,7 @@ class DataIfTokenExist
 		$user_id = $payload_from_token["id"];
 		$find_user = User::where("id", $user_id)->first();
 
-		if (!$find_user) {
-			return abort(404);
-		}
+		if (!$find_user) return abort(404);
 
 		$find_passport = Passport::where("user_id", $find_user->id)->first();
 

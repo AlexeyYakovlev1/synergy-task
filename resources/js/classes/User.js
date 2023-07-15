@@ -1,8 +1,10 @@
 import jwt_decode from "jwt-decode";
 import Cookie from "js-cookie";
 import Utils from "./Utils";
+import Request from "../classes/Request";
 
 const utils = new Utils();
+const request = new Request();
 
 class User {
 	constructor() {
@@ -12,17 +14,9 @@ class User {
 	}
 
 	update(data) {
-		const url = `${this.host}/user/update/${this.userId}`;
+		const params = { data };
 
-		return fetch(url, {
-			method: "POST",
-			headers: {
-				"Accept": "application/json",
-				"X-Requested-With": "XMLHttpRequest",
-				"X-CSRF-TOKEN": this.csrf
-			},
-			body: data
-		});
+		return request.post(`/user/update/${this.userId}`, params);
 	}
 }
 

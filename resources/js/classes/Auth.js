@@ -1,7 +1,8 @@
 import Utils from "./Utils";
-import axios from "axios";
+import Request from "./Request";
 
 const utils = new Utils();
+const request = new Request();
 
 class Auth {
 	constructor() {
@@ -10,31 +11,15 @@ class Auth {
 	}
 
 	login(data) {
-		const url = `${this.host}/auth/login`;
+		const params = { data };
 
-		return fetch(url, {
-			method: "POST",
-			headers: {
-				"Accept": "application/json",
-				"X-Requested-With": "XMLHttpRequest",
-				"X-CSRF-TOKEN": this.csrf
-			},
-			body: data
-		});
+		return request.post("/auth/login", params);
 	}
 
 	registration(data) {
-		const url = `${this.host}/auth/registration`;
+		const params = { data };
 
-		return fetch(url, {
-			method: "POST",
-			headers: {
-				"Accept": "application/json",
-				"X-Requested-With": "XMLHttpRequest",
-				"X-CSRF-TOKEN": this.csrf
-			},
-			body: data
-		});
+		return request.post("/auth/registration", params);
 	}
 }
 

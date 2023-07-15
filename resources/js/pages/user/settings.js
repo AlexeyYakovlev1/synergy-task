@@ -40,11 +40,12 @@ btnExit.addEventListener("click", () => {
 settingsForm.addEventListener("submit", (event) => {
 	event.preventDefault();
 
+	loader.show();
+
 	const fd = new FormData(settingsForm);
 	const promiseUpdate = user.update(fd);
 
 	promiseUpdate
-		.then((response) => response.json())
 		.then((data) => {
 			const { success, message, errors } = data;
 

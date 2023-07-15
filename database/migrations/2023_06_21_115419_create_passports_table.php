@@ -11,8 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        if (!Schema::hasTable("passports")) {
-			Schema::create('passports', function (Blueprint $table) {
+        if (!Schema::hasTable("passports"))
+		{
+			Schema::create("passports", function (Blueprint $table) {
 				$table->id();
 				$table->string("series");
 				$table->string("num")->unique();
@@ -20,8 +21,9 @@ return new class extends Migration
 			});
 		}
 
-		Schema::table("passports", function (Blueprint $table) {
-			$table->unsignedBigInteger('user_id');
+		Schema::table("passports", function (Blueprint $table)
+		{
+			$table->unsignedBigInteger("user_id");
 			$table->foreign("user_id")->references("id")->on("users");
 		});
     }

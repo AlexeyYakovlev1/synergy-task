@@ -8,7 +8,11 @@
 		<meta name="viewport" content="width=device-width, initial-scale=1.0">
     	<meta http-equiv="X-UA-Compatible" content="ie=edge">
 		
-		@vite(["resources/sass/profile.sass", "resources/sass/components/header.sass"])
+		@vite([
+			"resources/sass/profile.sass",
+			"resources/sass/components/header.sass",
+			"resources/sass/components/post.sass"
+		])
 		
 		<title>@yield("title")</title>
 	</head>
@@ -22,7 +26,10 @@
 			@yield("content")
 		</article>
 
-		@vite(["resources/js/scripts/closeAlert"])
+		@vite([
+			"resources/js/scripts/closeAlert",
+			"resources/js/scripts/renderUserPosts"
+		])
 		@yield("scripts")
 	</body>
 </html>

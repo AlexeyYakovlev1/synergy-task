@@ -20,7 +20,8 @@ class GiveUserData
 		$user_id_from_route = $request->route("id");
 
 		// Если текущий пользователь не вошел
-        if (!array_key_exists("token", $_COOKIE)) {
+        if (!array_key_exists("token", $_COOKIE))
+		{
 			$find_user = User::where("id", $user_id_from_route)->first();
 
 			if (!$find_user) return abort(404);
@@ -40,7 +41,8 @@ class GiveUserData
 		$validate_token = Token::validate($current_token, $secret);
 
 		// Если у текущего пользователя невалидный токен
-		if (!$validate_token) {
+		if (!$validate_token)
+		{
 			$find_user = User::where("id", $user_id_from_route)->first();
 
 			if (!$find_user) return abort(404);
@@ -60,8 +62,12 @@ class GiveUserData
 		if (
 			$user_id_from_route !== (string) $payload_from_token["id"] &&
 			(bool) $current_user === true
-		) {
+		)
+		{
 			$find_user = User::where("id", $user_id_from_route)->first();
+			
+			if (!$find_user) return abort(404);
+
 			$title = "$find_user->first_name $find_user->last_name";
 
 			return new Response(view("pages.user", [

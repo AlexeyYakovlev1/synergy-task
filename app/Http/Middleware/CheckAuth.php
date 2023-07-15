@@ -17,7 +17,8 @@ class CheckAuth
      */
     public function handle(Request $request, Closure $next)
     {
-        if (!array_key_exists("token", $_COOKIE)) {
+        if (!array_key_exists("token", $_COOKIE))
+		{
 			$request->merge(["isAuth" => false]);
 			
 			return $next($request);
@@ -28,7 +29,8 @@ class CheckAuth
 		
 		$validate_token = Token::validate($current_token, $secret);
 
-		if (!$validate_token) {
+		if (!$validate_token)
+		{
 			$request->merge(["isAuth" => false]);
 			
 			return $next($request);
@@ -36,8 +38,11 @@ class CheckAuth
 		
 		$payload_from_token = Token::getPayload($current_token);
 		$find_user = User::where("id", $payload_from_token["id"])->first();
-			
-		$request->merge(["isAuth" => (bool) $find_user]);
+
+		$request->merge([
+			"isAuth" => (bool) $find_user,
+			"user" => $find_user
+		]);
 			
 		return $next($request);
     }

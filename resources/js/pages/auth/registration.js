@@ -29,7 +29,6 @@ authFormRegistration.addEventListener("submit", (event) => {
 	const promiseRegistration = auth.registration(fd);
 
 	promiseRegistration
-		.then((response) => response.json())
 		.then((data) => {
 			const { success, message, password, errors } = data;
 

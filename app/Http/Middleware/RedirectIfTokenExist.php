@@ -2,8 +2,10 @@
 
 namespace App\Http\Middleware;
 
+use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Symfony\Component\HttpFoundation\Response;
 use ReallySimpleJWT\Token;
 
@@ -23,9 +25,11 @@ class RedirectIfTokenExist
 		
 		$validate_token = Token::validate($current_token, $secret);
 		$payload_from_token = Token::getPayload($current_token);
+		$user_id = $payload_from_token["id"];
+		$find_user = User::where("id", $user_id)->first();
 
-		// Если токен нормальный, то редиректим на главную страницу
-		if ($validate_token) return redirect("/user/".$payload_from_token["id"]);
+		// Если токен валидный и пользователь с таким идентификатором существует, то редиректим на страницу пользователя
+		if ($validate_token && (bool) $find_user === true) return redirect("/user/".$user_id);
 
 		return $next($request);
     }
