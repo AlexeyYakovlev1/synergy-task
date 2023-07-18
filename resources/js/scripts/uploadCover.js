@@ -1,5 +1,5 @@
-const createInputCover = document.querySelector(".create__input-cover");
-const createCoverView = document.querySelector(".create__cover-view");
+const createInputCover = document.querySelector(".input__cover");
+const createCoverView = document.querySelector(".cover__view");
 
 createInputCover.addEventListener("change", (event) => {
 	const file = event.target.files[0];

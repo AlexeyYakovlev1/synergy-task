@@ -18,6 +18,10 @@ class Post {
 	getByUserId(id) {
 		return request.get(`/post/all/${id}`, {});
 	}
+
+	remove(id) {
+		return request.remove(`/post/delete/${id}`, {});
+	}
 }
 
 export default Post;

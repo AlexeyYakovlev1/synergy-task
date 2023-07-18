@@ -1,0 +1,52 @@
+@import "../_global"
+
+.modal
+	position: fixed
+	top: 0
+	left: 0
+	right: 0
+	bottom: 0
+	background-color: rgba(0,0,0,.5)
+	z-index: 99
+
+	&.hidden
+		display: none
+
+	&__content
+		position: absolute
+		top: 50%
+		left: 50%
+		transform: translate(-50%, -50%)
+		background-color: $dark
+		color: white
+
+	&__header
+		padding: 20px
+		display: flex
+		justify-content: space-between
+		align-items: center
+		border-bottom: 1px solid $gradient-1
+
+	&__close
+		cursor: pointer
+		user-select: none
+
+	&__title
+		font-weight: 400
+		font-size: 24px
+
+	&__text
+		line-height: 22px
+		padding: 20px
+
+	&__footer
+		display: flex
+		justify-content: space-between
+		align-items: center
+		padding: 20px
+.btn
+	&__exit
+		background-color: $red
+		color: white
+		&:hover
+			background-color: $light-pink

@@ -173,7 +173,6 @@ class PostController extends Controller
 				->header("Content-Type", "application/json");
 			}
 
-			$find_user = User::where("id", $request->user->id)->first();
 			$find_post = Post::where("id", $id)->first();
 
 			if (!$find_post)
@@ -187,6 +186,8 @@ class PostController extends Controller
 				)
 				->header("Content-Type", "application/json");
 			}
+
+			$find_user = User::where("id", $request->user->id)->first();
 
 			// Если удаление производит не владелец поста
 			if ((string) $find_user->id !== (string) $find_post->owner_id)
@@ -253,7 +254,24 @@ class PostController extends Controller
 		return view("pages.post.create", [
 			"title" => "Создать пост",
 			"notMyProfile" => false,
-			"user" => $request->user
+			"user" => $request->user,
+			"post" => null
+		]);
+	}
+
+	public function view_edit(Request $request, string $id)
+	{
+		if (!$request->isAuth) return abort(404);
+
+		$find_post = Post::where("id", $id)->first();
+
+		if (!$find_post) return abort(404);
+
+		return view("pages.post.create", [
+			"title" => "Изменить пост",
+			"notMyProfile" => false,
+			"user" => $request->user,
+			"post" => $find_post
 		]);
 	}
 

@@ -11,7 +11,8 @@
 		@vite([
 			"resources/sass/profile.sass",
 			"resources/sass/components/header.sass",
-			"resources/sass/components/post.sass"
+			"resources/sass/components/post.sass",
+			"resources/sass/components/modal.sass"
 		])
 		
 		<title>@yield("title")</title>
@@ -19,6 +20,12 @@
 	<body>
 		<x-loader />
 		<x-alert />
+		<x-modal
+			title="Вы уверены?"
+			description="Пост будет удален навсегда"
+			btnGo="Удалить"
+			btnStop="Отмена"
+		/>
 
 		@include("../includes/header")
 
@@ -28,7 +35,8 @@
 
 		@vite([
 			"resources/js/scripts/closeAlert",
-			"resources/js/scripts/renderUserPosts"
+			"resources/js/scripts/renderUserPosts",
+			"resources/js/scripts/closeModal"
 		])
 		@yield("scripts")
 	</body>

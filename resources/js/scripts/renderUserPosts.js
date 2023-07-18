@@ -2,6 +2,7 @@ import Post from "../classes/Post";
 import Alert from "../classes/Alert";
 import Loader from "../classes/Loader";
 import { format } from "date-fns";
+import closeModal from "./closeModal";
 
 const post = new Post();
 const alert = new Alert();
@@ -31,7 +32,7 @@ window.addEventListener("DOMContentLoaded", () => {
 					const createdAt = format(new Date(post.created_at), "dd/MM/yyyy");
 
 					const postHtml = `
-						<li class="post">
+						<li class="post" data-id="${post.id}">
 							<header class="post__header">
 								<div class="post__header-owner">
 									<img
@@ -48,7 +49,7 @@ window.addEventListener("DOMContentLoaded", () => {
 										</span>
 									</div>
 								</div>
-								<span class="post__header-settings">
+								<div class="post__header-settings" data-id="${post.id}">
 									<?xml version="1.0" encoding="UTF-8"?>
 									<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px" viewBox="0 0 24 24" version="1.1">
 									<g id="surface1">
@@ -57,7 +58,16 @@ window.addEventListener("DOMContentLoaded", () => {
 									<path style="fill-rule:nonzero;fill:#fff;fill-opacity:1;stroke-width:2.739244;stroke-linecap:butt;stroke-linejoin:round;stroke:#fff;stroke-opacity:1;stroke-miterlimit:4;" d="M 1013.73715 -70.625 L 1026.98715 -70.625 L 1026.98715 -57.375 L 1013.73715 -57.375 Z M 1013.73715 -70.625 " transform="matrix(0,0.1875,-0.1875,0,0,-173.317903)"/>
 									</g>
 									</svg>
-								</span>
+									<div class="post__header-settings-place hidden" data-id="${post.id}">
+										<ul class="post__header-settings-place-list">
+											<li data-do="change">
+												<span>
+													<a href="/edit/${post.id}">Изменить</a>
+												</span>
+											</li>
+										</ul>
+									</div>
+								</div>
 							</header>
 							<div class="post__content">
 								<p class="post__content-text">${post.content}</p>
@@ -90,6 +100,24 @@ window.addEventListener("DOMContentLoaded", () => {
 					`;
 
 					postsList.innerHTML += postHtml;
+
+					const posts = document.querySelectorAll(".post");
+
+					// открытие окна настроек для каждого поста
+					posts.forEach((post) => {
+						post.addEventListener("click", (event) => {
+							const target = event.target;
+
+							if (target.parentNode.className === "post__header-settings") {
+								const idParent = target.parentNode.dataset.id;
+								const settingsPlace = document.querySelector(`.post__header-settings-place[data-id="${idParent}"]`);
+
+								settingsPlace.classList.toggle("hidden");
+							}
+						});
+					});
+
+
 				});
 			}
 

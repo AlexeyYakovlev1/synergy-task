@@ -6,7 +6,7 @@
 	border-radius: 3px
 	border: 1px solid $gray
 	width: 400px
-	// max-height: 1000px
+	max-height: 1000px
 	display: grid
 	grid-template-rows: auto 1fr auto
 	gap: 10px 0
@@ -36,7 +36,30 @@
 				font-size: 13px
 				color: $gray
 		&-settings
+			position: relative
 			cursor: pointer
+			user-select: none
+			&-place
+				position: absolute
+				right: -110px
+				bottom: 0
+				background-color: $dark
+				border-radius: 3px
+				border: 1px solid $gray
+				&-list
+					display: flex
+					flex-direction: column
+					& li
+						cursor: pointer
+						font-size: 15px
+						padding: 8px 10px
+						transition: background-color .2s ease
+						&:not(:last-child)
+							border-bottom: 1px solid $gray
+						&:hover
+							background-color: $black
+							&[data-do="delete"]
+								background-color: $red
 	&__content
 		display: flex
 		flex-direction: column

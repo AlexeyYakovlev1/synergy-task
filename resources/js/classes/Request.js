@@ -6,14 +6,16 @@ class Request {
 	constructor() {
 		this.csrf = utils.getCsrf();
 		this.host = utils.getHost();
-	}
 
-	post(url, params) {
-		const allHeaders = Object.assign({
+		this.defaultHeaders = {
 			"Accept": "application/json",
 			"X-Requested-With": "XMLHttpRequest",
 			"X-CSRF-TOKEN": this.csrf
-		}, params.headers);
+		};
+	}
+
+	post(url, params) {
+		const allHeaders = Object.assign(this.defaultHeaders, params.headers);
 
 		return fetch(`${this.host}${url}`, {
 			method: "POST",
@@ -24,14 +26,20 @@ class Request {
 	}
 
 	get(url, params) {
-		const allHeaders = Object.assign({
-			"Accept": "application/json",
-			"X-Requested-With": "XMLHttpRequest",
-			"X-CSRF-TOKEN": this.csrf
-		}, params.headers);
+		const allHeaders = Object.assign(this.defaultHeaders, params.headers);
 
 		return fetch(`${this.host}${url}`, {
 			method: "GET",
+			headers: allHeaders
+		})
+			.then((response) => response.json());
+	}
+
+	remove(url, params) {
+		const allHeaders = Object.assign(this.defaultHeaders, params.headers);
+
+		return fetch(`${this.host}${url}`, {
+			method: "DELETE",
 			headers: allHeaders
 		})
 			.then((response) => response.json());
